@@ -22,14 +22,16 @@ function init() {
 	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
 	scene.add(camera);
-	camera.position.set(0,150,400);
+	camera.position.set(0,0,0);
 	camera.lookAt(scene.position);	
+	
 	// RENDERER
 	if ( Detector.webgl ) {
 		renderer = new THREE.WebGLRenderer( {antialias:true} );
 	}
 	else {
 		renderer = new THREE.CanvasRenderer(); 
+		console.log('No WebGL support');
 	}
 	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	container = document.getElementById( 'ThreeJS' );
@@ -45,27 +47,6 @@ function init() {
 	stats.domElement.style.bottom = '0px';
 	stats.domElement.style.zIndex = 100;
 	container.appendChild( stats.domElement );
-	// LIGHT
-	var light = new THREE.PointLight(0xffffff);
-	light.position.set(0,250,0);
-	scene.add(light);
-	// FLOOR
-	var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
-	floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
-	floorTexture.repeat.set( 10, 10 );
-	var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
-	var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
-	var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-	floor.position.y = -0.5;
-	floor.rotation.x = Math.PI / 2;
-	scene.add(floor);
-	// SKYBOX/FOG
-	var skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
-	var skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff, side: THREE.BackSide } );
-	var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
-	// scene.add(skyBox);
-	scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );
-	
 	
 	///////////
 	// VIDEO //
@@ -77,21 +58,13 @@ function init() {
 	// video.type = ' video/ogg; codecs='theora, vorbis' ';
 	video.volume = 0;
 	video.loop = true;
-	video.src = '/test.webm';
+	video.src = '/vids/three60.10M.vid.webm';
 	video.load(); // must call after setting/changing source
 	video.play();
 	
-	// alternative method -- 
-	// create DIV in HTML:
-	// <video id='myVideo' autoplay style='display:none'>
-	//		<source src='videos/sintel.ogv' type='video/ogg; codecs='theora, vorbis''>
-	// </video>
-	// and set JS variable:
-	// video = document.getElementById( 'myVideo' );
-	
 	videoImage = document.createElement( 'canvas' );
-	videoImage.width = 480;
-	videoImage.height = 204;
+	videoImage.width = 1600;
+	videoImage.height = 800;
 
 	videoImageContext = videoImage.getContext( '2d' );
 	// background color if no video present
@@ -105,12 +78,13 @@ function init() {
 	var movieMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
 	// the geometry on which the movie will be displayed;
 	// 		movie image will be scaled to fit these dimensions.
-	var movieGeometry = new THREE.PlaneGeometry( 240, 100, 4, 4 );
+	// var movieGeometry = new THREE.PlaneGeometry( 240, 100, 4, 4 );
+	var movieGeometry = new THREE.SphereGeometry(240, 100, 100);
 	var movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
-	movieScreen.position.set(0,50,0);
+	movieScreen.position.set(0,0,0);
 	scene.add(movieScreen);
 	
-	camera.position.set(0,150,300);
+	camera.position.set(0,0,120);
 	camera.lookAt(movieScreen.position);
 
 	
