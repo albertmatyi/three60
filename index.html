@@ -37,7 +37,7 @@
 
     <section id="downloads">
       <span class="inner">
-        <a href="https://github.com/albertmatyi/three60/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/albertmatyi/three60/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        <a href="https://github.com/albertmatyi/three60/zipball/gh-pages/example" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/albertmatyi/three60/tarball/gh-pages/example" class="tgz"><em>download</em> .TGZ</a>
       </span>
     </section>
 
@@ -47,7 +47,7 @@
 
     <section id="main_content">
       <h3>
-        <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Intro
+        <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span>Intro</a>
       </h3>
 
       <p>Do you want to embed a 360 video in your webpage? Something like:</p>
@@ -68,16 +68,73 @@
       <p>But noone really offers (free/open) solutions on how to showcase these on your website</p>
 
       <h3>
-        <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>DEMO
+        <a name="demo" class="anchor" href="example/index.html" target="blank"><span class="octicon octicon-link"></span>DEMO</a>
       </h3>
 
       <p>
-        Here you can view a <b><a href="example/index.html" target="blank" class="user-mention">DEMO</a></b> that runs on <em>Chrome</em>, <em>Firefox</em> on <em>Windows</em>, <em>Linux</em> and <em>OSX</em>.
+        Here you can view a <b><a href="example/index.html" target="blank">DEMO</a></b> that runs on <em>Chrome</em>, <em>Firefox</em> on <em>Windows</em>, <em>Linux</em> and <em>OSX</em>.
+      </p>
+      <h4>Controls</h4>
+      <ul>
+        <li><code>drag</code> the image around to pan</li>
+        <li><code>space</code> to pause the video</li>
+        <li><code>p</code> to play</li>
+        <li><code>r</code> to rewind</li>
+        <li><code>m</code> for fullscreen</li>
+      </ul>
+      <p>
+        You could embed this into your page as well, you'd just have to check out the example directory of the  <a href="https://github.com/albertmatyi/three60/tree/gh-pages">github project</a>
       </p>
       <p>
-      You could embed this into your page as well, you'd just have to check out the example directory of the  <a href="https://github.com/albertmatyi/three60/tree/gh-pages">github project</a>
+        The <a href="https://github.com/albertmatyi/three60">master branch</a> of the project contains a <a href="http://meteor.com">meteor.js</a> project with the same capabilities as the <a href="example/index.html" target="blank">demo</a> above
       </p>
+      <p>You can download the zip or tar version and run &amp; play around with the sample. Note though: for good performance use chrome, and if you run it locally (from <code>file:///</code>) then start chrome wiht the <code> --allow-file-access-from-files</code> flag</p>, otherwise the video won't be loaded.
+      <h3>
+        <a name="the-plan" class="anchor" href="#the-plan"><span class="octicon octicon-link"></span>
+          The plan
+        </a>
+      </h3>
+      <p>My goal would be - given enough free time - to develop a small framework that would be user/dev friendly that would allow</p>
+      <ul>
+        <li>Easy embedding of a 360 video into a web page</li>
+        <li>Nice UI controls for the "player"</li>
+        <li>A small offline app to convert the video into a suitable web format (for multiple platforms)</li>
+        <li>API for controlling 
+          <ul>
+            <li>Looking direction</li>
+            <li>Quality</li>
+            <li>Field of view</li>
+          </ul>
+        </li>
+      </ul>
 
+      <h3>
+        <a name="how-it-was-done" class="anchor" href="#how-it-was-done"><span class="octicon octicon-link"></span>
+          How this was done
+        </a>
+      </h3>
+      <ul>
+        <li>I've downloaded the sample output of the <a href="http://www.video-stitch.com">video-stitch</a> software found <a href="http://www.video-stitch.com/download/">here</a>, and while looking at it realized that if mapped to a sphere it would give a nice view</li>
+        <li>Afterward I've found this <a href="http://stemkoski.github.io/Three.js/Video.html">three.js based project</a> showing how you can map videos to webgl objects </li>
+        <li>I've converted the mp4 - which for some reasons didn't play in the browser - to webm with ffmpeg <br/>
+          <pre>ffmpeg -i ./in.mp4 -c:v libvpx -b:v 10M -c:a libvorbis ./out.webm</pre> - 10M is for the bitrate of the output video
+        </li>
+        <li>Then I've just fiddled around with the code, adjusting camera position and using a sphere as the output <a href="example/index.html" target="blank">et voilà</a></li>
+      </ul>
+      <h3>
+        <a name="motivation" class="anchor" href="#motivation"><span class="octicon octicon-link"></span>
+          Motivation
+        </a>
+      </h3>
+      <p>I am working on an awesome project, in which we'd like to embed 360 videos in a page, and we've got a ridiculously expensive offer from one of the companies that provide such facilities for a limited functionality that we wanted.
+      </p>
+      <p>After a bit of thinking / googling around I've realised that is not that hard and in an evening just sat down, and threw the project together in 2 hrs. </p>
+      <p>I believe that for limited scenarios (eg: where no cross platform/browser/mobile support is needed) this solution should be publicly available &amp; free of charge. Therefore I am publishing this, maybe it will help someone out, and as mentioned maybe me or someone else can develop it further into a generic solution</p>
+      <h3>
+        <a name="cheers" class="anchor" href="#cheers"><span class="octicon octicon-link"></span>
+          Cheers :)
+        </a>
+      </h3>
 
     </section>
 
